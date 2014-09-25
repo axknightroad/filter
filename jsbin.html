@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2014 by anonymous (http://jsbin.com/uziyih/270/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<html>
+  <head>
+
+<script class="jsbin" src="jsbin.js"></script>
+<meta charset=utf-8 />
+<title>Webkit Filters</title>
+  
+  <style>
+    body {
+    height:100%;
+    overflow:hidden;
+    margin:0;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+    color:#FFFFFF;
+    background-color:#000000;
+    filter:blur(2px) grayscale (.5) opacity(0.8) hue-rotate(120deg);
+    }
+
+    iframe{
+    height:100%;
+    width:90%;
+    position:absolute;
+    left:270px;
+    }
+
+    form{
+    margin: auto; 
+    position:absolute;
+    top: 0; bottom: 0;
+    }
+
+    li { list-style: none; }
+  </style>
+
+</head>
+<body>
+   <iframe src="http://10.203.2.71:8080/upload/images/ys/Dy.001/vtour/tour.html" width="100%" height="100%" frameborder="0"></iframe>
+  
+
+  
+  <form>
+    <ul>
+      饱和度:
+      <li>
+        <label></label>
+        <input id=saturate type=range min=0 max=1000 value=100 class="filter">
+      </li>
+      <p></p>
+      色相旋转:
+      <li>
+        <label> </label>
+        <input id=hue-rotate type=range min=0 max=1000 value=0 class="filter">
+      </li>
+       <p></p>
+       灰度:
+      <li>
+        <label></label>
+        <input id=grayscale type=range min=0 max=100 value=0 class="filter">
+      </li>
+       <p></p>
+      褐色:
+      <li>
+        <label></label>
+        <input id=sepia type=range min=0 max=100 value=0 class="filter">
+      </li>
+       <p></p>
+       亮度:
+      <li>
+        <label></label>
+        <input id=brightness type=range min=30 max=200 value=100 class="filter">
+      </li>
+       <p></p>
+      对比度:
+      <li>
+        <label></label>
+        <input id=contrast type=range min=30 max=400 value=100 class="filter">
+      </li>
+       <p></p>
+       反色:
+      <li>
+        <label></label>
+        <input id=invert type=range min=0 max=100 value=0 class="filter">
+      </li>       
+    </ul>
+    <!--
+    <a href="#" id="getCSS">Get CSS</a><br>
+    <a href="#" id="reset">Reset</a>
+    -->
+  </form>
+  <!--
+  <h5>By <a href="http://net.tutsplus.com">Jeffrey</a> </h5>
+  -->
+<script id="jsbin-javascript">
+(function() {
+  
+  var iframe = $('iframe'),
+      styling = '';
+  
+  addOrReplace = function() {
+    var regex = new RegExp(this.id, 'i'),
+        search,
+        incrementType;
+    
+    if ( this.id === 'hue-rotate') incrementType = 'deg';
+    else incrementType = '%';
+  
+    if ( regex.test(styling) ) {
+     search = new RegExp(this.id + "[^ $]+", 'i');
+     styling = styling.replace(search,  this.id + "(" + this.value + incrementType + ")");
+      
+    } else {
+      styling += " " + this.id + "(" + this.value + incrementType + ")";
+    }
+    
+  
+    // "just in case" spacing case cleanup
+    styling = styling.replace(/\s\s/, ' ');
+    
+    // Apply the CSS
+    iframe.css('-webkit-filter', styling);
+    
+  };
+  
+  // When range is adjusted
+  $('.filter').change(addOrReplace);
+  
+  
+  // When they want the CSS.
+  $('#getCSS').click(function(e) {
+    alert('-webkit-filter: ' + styling + ';');
+     e.preventDefault();
+  });
+  
+  $('#reset').click(function(e) {
+    history.go(0);
+    e.preventDefault();
+  });
+
+})();
+
+</script>
+</body>
+</html>
